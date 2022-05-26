@@ -1,12 +1,20 @@
-import './App.css';
 import { useState } from 'react';
 
 const Todo = ({ todo, index, setCheckedState, deleteTodo }) => {
   return (
-    <div>
-      <input type="checkbox" checked={todo.checked} onChange={() => setCheckedState(index, !todo.checked)} />
-      <span>{todo.text}</span>
-      <button onClick={() => deleteTodo(index)}>Delete</button>
+    <div className="flex flex-row justify-between px-3 py-1 border-2 border-solid rounded border-gray-500">
+      <div className="flex flex-row items-center">
+        <input
+          type="checkbox"
+          checked={todo.checked}
+          onChange={() => setCheckedState(index, !todo.checked)}
+          className="mr-2"
+        />
+        <span>{todo.text}</span>
+      </div>
+      <button onClick={() => deleteTodo(index)} className="border border-black rounded px-2 hover:bg-gray-100">
+        Delete
+      </button>
     </div>
   );
 };
@@ -23,7 +31,6 @@ const NewTodoInput = ({ addTodo }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label htmlFor="new-todo">New Todo</label>
         <input
           id="new-todo"
           type="text"
@@ -31,7 +38,8 @@ const NewTodoInput = ({ addTodo }) => {
           onChange={(e) => {
             setTodoText(e.target.value);
           }}
-        ></input>
+        />
+        <input type="submit" value="Submit" />
       </div>
     </form>
   );
@@ -63,13 +71,15 @@ function App() {
   console.log(todos);
 
   return (
-    <div className="todo-container">
-      <h3>Welcome to the todos app!</h3>
-      {todos.map((todo, index) => (
-        <Todo key={index} todo={todo} index={index} setCheckedState={setCheckedState} deleteTodo={deleteTodo} />
-      ))}
-      <NewTodoInput addTodo={addTodo} />
-      {todos.length > 0 && todos.filter((todo) => !todo.checked).length === 0 && <div>All todos complete!</div>}
+    <div className="h-screen w-screen flex flex-col items-center">
+      <div className="text-4xl mt-12 mb-6">Welcome to the todos app!</div>
+      <div className="flex flex-col space-y-2">
+        {todos.map((todo, index) => (
+          <Todo key={index} todo={todo} index={index} setCheckedState={setCheckedState} deleteTodo={deleteTodo} />
+        ))}
+        <NewTodoInput addTodo={addTodo} />
+        {todos.length > 0 && todos.filter((todo) => !todo.checked).length === 0 && <div>All todos complete!</div>}
+      </div>
     </div>
   );
 }
