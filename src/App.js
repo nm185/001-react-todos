@@ -69,6 +69,7 @@ function App() {
         <Todo key={index} todo={todo} index={index} setCheckedState={setCheckedState} deleteTodo={deleteTodo} />
       ))}
       <NewTodoInput addTodo={addTodo} />
+      {todos.length > 0 && todos.filter((todo) => !todo.checked).length === 0 && <div>All todos complete!</div>}
     </div>
   );
 }
