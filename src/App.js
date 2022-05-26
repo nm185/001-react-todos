@@ -1,11 +1,12 @@
 import './App.css';
 import { useState } from 'react';
 
-const Todo = ({ todo, index, setCheckedState }) => {
+const Todo = ({ todo, index, setCheckedState, deleteTodo }) => {
   return (
     <div>
       <input type="checkbox" checked={todo.checked} onChange={() => setCheckedState(index, !todo.checked)} />
       <span>{todo.text}</span>
+      <button onClick={() => deleteTodo(index)}>Delete</button>
     </div>
   );
 };
@@ -54,15 +55,18 @@ function App() {
   };
 
   const deleteTodo = (index) => {
-    const updatedTodos = todos.splice(index, 1);
+    const updatedTodos = [...todos];
+    updatedTodos.splice(index, 1);
     setTodos(updatedTodos);
   };
+
+  console.log(todos);
 
   return (
     <div className="todo-container">
       <h3>Welcome to the todos app!</h3>
       {todos.map((todo, index) => (
-        <Todo key={index} todo={todo} index={index} setCheckedState={setCheckedState} delete={deleteTodo} />
+        <Todo key={index} todo={todo} index={index} setCheckedState={setCheckedState} deleteTodo={deleteTodo} />
       ))}
       <NewTodoInput addTodo={addTodo} />
     </div>
